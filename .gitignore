@@ -1,6 +1,2 @@
-/smart_contract/node_modules/*
-/smart_contract/package-lock.json
-/smart_contract/.env
-
-/react/node_modules/*
-/react/package-lock.json
+/kickstart/node_modules/*
+/kickstart/package-lock.json

@@ -1,2 +1,3 @@
 /kickstart/node_modules/*
 /kickstart/package-lock.json
+/kickstart/.env

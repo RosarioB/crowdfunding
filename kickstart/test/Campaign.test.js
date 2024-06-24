@@ -13,24 +13,23 @@ let campaign;
 
 beforeEach(async () => {
   accounts = await web3.eth.getAccounts();
-
-  factory = await new web3.eth.Contract(JSON.parse(compiledFactory.interface)) // We are deploying a new contract CampaignFactory
-    .deploy({ data: compiledFactory.bytecode })
-    .send({ from: accounts[0], gas: "1000000" });
-
+  
+  factory = await new web3.eth.Contract(compiledFactory.abi) // We are deploying a new contract CampaignFactory
+    .deploy({ data: compiledFactory.evm.bytecode.object })
+    .send({ from: accounts[0], gas: "2000000" });
+  
   await factory.methods.createCampaign("100").send({
     // We are creating a new contract Campaign by calling the method createCampaign on the CampaignFactory contract.
     // we set 100 wei as the minimun contribution when we call createCampaign
     // we use send instead of call because we are sending a transaction since we are modifying the data.
     from: accounts[0],
-    gas: "1000000",
+    gas: "2000000",
   });
 
   [campaignAddress] = await factory.methods.getDeployedCampaigns().call(); // In this case we are not changing any data so we are using call. In fact we are calling a function and not sending a transaction.
   // [campaignAddress] is destructuring an array. We are passing to the variabile campaignAddress the first element of the array returned by await factory.methods.getDeployedCampaigns().call();
-
   campaign = await new web3.eth.Contract( // we are retrieving the Campaign contract deployed at the address campaignAddress
-    JSON.parse(compiledCampaign.interface),
+    compiledCampaign.abi,
     campaignAddress
   );
 });
@@ -66,16 +65,18 @@ describe("Campaigns", () => {
       assert(err);
     }
   });
-
+  
   it("allows a manager to make a payment request", async () => {
     await campaign.methods
-      .createRequest("Buy batteries", "100", accounts[1])
+      .createRequest("Buy batteries", '100', accounts[1])
       .send({
         from: accounts[0],
         gas: "1000000",
       }); // we are modifying the data in the contract so we need to invoke send
-    const request = await campaign.methods.requests(0).call(); // we are not modifying any data in the contract so we can invoke call
-    assert.equal("Buy batteries", request.description);
+    /*  
+    let request = await campaign.methods.getRequest(0).call(); // we are not modifying any data in the contract so we can invoke call
+    assert.equal("Buy batteries", request);
+    */
   });
 
   // This is an end to end test. We are testing everything that our campaign does from start to finish

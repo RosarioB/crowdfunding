@@ -1,15 +1,15 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.4.17;
+pragma solidity ^0.8.26;
 
 contract CampaignFactory {
     address[] public deployedCampaigns;
 
     function createCampaign(uint minimum) public { // Pass the minimum argument to the Campaign constructor
-        address newCampaign = new Campaign(minimum, msg.sender); // create a new contract Campaign
-        deployedCampaigns.push(newCampaign); 
+        Campaign newCampaign = new Campaign(minimum, msg.sender); // create a new contract Campaign
+        deployedCampaigns.push(address(newCampaign)); 
     }
 
-    function getDeployedCampaigns() public view returns (address[]) {
+    function getDeployedCampaigns() public view returns (address[] memory) {
         return deployedCampaigns;
     }
 }
@@ -18,7 +18,7 @@ contract Campaign { // we define the type Campaign but we have not instatiated a
     struct Request {
         string description;
         uint value;
-        address recipient;
+        address payable recipient;
         bool complete;
         uint approvalCount;
         mapping(address => bool) approvals;
@@ -35,7 +35,7 @@ contract Campaign { // we define the type Campaign but we have not instatiated a
         _;
     }
 
-    function Campaign(uint minimum, address creator) public {
+    constructor(uint minimum, address creator) {
         manager = creator; // the creator address will be the manager
         minimumContribution = minimum;
     }
@@ -46,9 +46,14 @@ contract Campaign { // we define the type Campaign but we have not instatiated a
         approversCount++;
     }
 
-    function createRequest(string description, uint value, address recipient) public  restricted {
-        Request memory request = Request(description, value, recipient, false, 0);
-        requests.push(request);
+    function createRequest(string memory description, uint value, address payable recipient) public  restricted {
+        requests.push();
+        Request storage request = requests[requests.length -1];
+        request.description = description;
+        request.value = value;
+        request.recipient = recipient;
+        request.complete = false;
+        request.approvalCount = 0;
     }
 
     function approveRequest(uint index) public { // index of the Request[]
@@ -66,5 +71,12 @@ contract Campaign { // we define the type Campaign but we have not instatiated a
         require(!request.complete);
         request.recipient.transfer(request.value); // sends the money to the recipient
         request.complete = true;
+    }
+
+    function getRequest(uint index) public view returns (string memory) {
+        Request storage request = requests[index];
+        return (
+            request.description
+            );
     }
 }

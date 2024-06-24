@@ -9,4 +9,4 @@ The folder `ethereum` contains the smart contracts `Campaign` and `CampaignFacto
 
 4. Run the tests on the smart contracts: `npm run test`
 
-5. Deply the contract: `node ethereum/deploy.js`
+5. Deploy the contract: `node ethereum/deploy.js`

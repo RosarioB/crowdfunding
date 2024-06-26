@@ -1,3 +1,4 @@
 /kickstart/node_modules/*
 /kickstart/package-lock.json
-/kickstart/.env
+/kickstart/.env.local
+/kickstart/.next

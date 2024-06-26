@@ -74,8 +74,8 @@ describe("Campaigns", () => {
         gas: "1000000",
       }); // we are modifying the data in the contract so we need to invoke send
     /* This code is correct but it gives problem on Ganache after the contract has been updated to 0.8.26 
-    let request = await campaign.methods.getRequest(0).call(); // we are not modifying any data in the contract so we can invoke call
-    assert.equal("Buy batteries", request);
+    const request = await campaign.methods.getRequest(0).call(); // we are not modifying any data in the contract so we can invoke call
+    assert.equal("Buy batteries", request.description);
     */
   });
 

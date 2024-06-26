@@ -1,6 +1,7 @@
 # crowdfunding
 The folder `ethereum` contains the smart contracts `Campaign` and `CampaignFactory`
 
+--add .env file
 1. `cd kickstart`
 
 2. Download the dependencies: `npm install`

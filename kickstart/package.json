@@ -15,7 +15,7 @@
     "fs-extra": "^11.2.0",
     "ganache": "^7.9.2",
     "mocha": "^10.4.0",
-    "next": "^12.3.4",
+    "next": "^14.2.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "semantic-ui-css": "^2.5.0",

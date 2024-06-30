@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { withRouter } from "next/router";
 import { Form, FormField, Button, Input, Message } from "semantic-ui-react";
 import Layout from "../../components/Layout";
 import factory from "../../ethereum/factory";
@@ -14,7 +15,7 @@ class CampaignNew extends Component {
 
   onSubmit = async (event) => {
     event.preventDefault();
-    this.setState({ loading: true, errorMessage: '', disabled: true });
+    this.setState({ loading: true, errorMessage: "", disabled: true });
     try {
       const accounts = await web3.eth.getAccounts();
       await factory.methods
@@ -22,8 +23,10 @@ class CampaignNew extends Component {
         .send({
           from: accounts[0],
         });
+      this.props.router.push("/");
     } catch (err) {
       this.setState({ errorMessage: err.message });
+      console.log(err);
     }
     this.setState({ loading: false, disabled: false });
   };
@@ -45,11 +48,17 @@ class CampaignNew extends Component {
             />
           </FormField>
           <Message error header="Oops!" content={this.state.errorMessage} />
-          <Button primary loading={this.state.loading} disabled={this.state.disabled}>Create!</Button>
+          <Button
+            primary
+            loading={this.state.loading}
+            disabled={this.state.disabled}
+          >
+            Create!
+          </Button>
         </Form>
       </Layout>
     );
   }
 }
 
-export default CampaignNew;
+export default withRouter(CampaignNew);

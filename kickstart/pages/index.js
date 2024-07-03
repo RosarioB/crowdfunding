@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { CardGroup, Button } from "semantic-ui-react";
 import factory from "../ethereum/factory";
 import Layout from "../components/Layout";
+import Link from "next/link";
 
 const CampaignIndex = () => {
   const [campaigns, setCampaigns] = useState([]);
@@ -19,7 +20,16 @@ const CampaignIndex = () => {
     const items = campaigns.map((address) => {
       return {
         header: address,
-        description: <a>View Campaign</a>,
+        description: (
+          <Link
+            href={{
+              pathname: "/campaigns/[address]",
+              query: { address },
+            }}
+          >
+            View Campaign
+          </Link>
+        ),
         fluid: true,
       };
     });
@@ -31,7 +41,14 @@ const CampaignIndex = () => {
     <Layout>
       <div>
         <h3>Open Campaigns</h3>
-        <Button floated="right" content="Create Campaign" icon="add" primary />
+        <Link href="/campaigns/new">
+          <Button
+            floated="right"
+            content="Create Campaign"
+            icon="add"
+            primary
+          />
+        </Link>
         {renderCampaigns()}
       </div>
     </Layout>

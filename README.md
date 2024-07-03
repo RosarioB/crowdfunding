@@ -1,19 +1,24 @@
 # crowdfunding
 The folder `ethereum` contains the smart contracts `Campaign` and `CampaignFactory`
 
+## Project set up
 1. `cd kickstart`
 
 2. Download the dependencies: `npm install`
 
-3. Create a `.env` file in the root of the `kickstart` folder. 
-    - Add your `PRIVATE_KEY` and `INFURA_URL` to the `.env` file
+3. Deploy the Factory contract: `node ethereum/deploy.js` and copy the address. 
+
+4. Create a `.env.local` file in the root of the `kickstart` folder. 
+    - Add your `PRIVATE_KEY`, `INFURA_URL` and `NEXT_PUBLIC_FACTORY_CONTRACT_ADDRESS` in the file:
         ```
         PRIVATE_KEY=your_private_key
-        INFURA_URL=https://infura.io/v3/your_infura_project_id
+        INFURA_URL=your_infura_api_key
+        NEXT_PUBLIC_FACTORY_CONTRACT_ADDRESS=your_factory_contract_address
         ```
+5. Run the front-end application with `npm run dev`
 
-4. Compile the smart contracts `node ethereum/compile.js`
+## Smart Contract commands
+-  Compile the smart contracts `node ethereum/compile.js`
 
-5. Run the tests on the smart contracts: `npm run test`
+-  Run the tests on the smart contracts: `npm run test`
 
-6. Deploy the contract: `node ethereum/deploy.js`

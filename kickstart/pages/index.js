@@ -1,21 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { CardGroup, Button } from "semantic-ui-react";
-import factory from "../ethereum/factory";
-import Layout from "../components/Layout";
-import Link from "next/link";
+import React from 'react';
+import { CardGroup, Button } from 'semantic-ui-react';
+import factory from '../ethereum/factory';
+import Layout from '../components/Layout';
+import Link from 'next/link';
 
-const CampaignIndex = () => {
-  const [campaigns, setCampaigns] = useState([]);
-
-  useEffect(() => {
-    const fetchCampaigns = async () => {
-      const campaigns = await factory.methods.getDeployedCampaigns().call();
-      setCampaigns(campaigns);
-    };
-
-    fetchCampaigns();
-  }, []);
-
+const CampaignIndex = ({ campaigns }) => {
   const renderCampaigns = () => {
     const items = campaigns.map((address) => {
       return {
@@ -23,7 +12,7 @@ const CampaignIndex = () => {
         description: (
           <Link
             href={{
-              pathname: "/campaigns/[address]",
+              pathname: '/campaigns/[address]',
               query: { address },
             }}
           >
@@ -41,11 +30,11 @@ const CampaignIndex = () => {
     <Layout>
       <div>
         <h3>Open Campaigns</h3>
-        <Link href="/campaigns/new">
+        <Link href='/campaigns/new'>
           <Button
-            floated="right"
-            content="Create Campaign"
-            icon="add"
+            floated='right'
+            content='Create Campaign'
+            icon='add'
             primary
           />
         </Link>
@@ -54,5 +43,10 @@ const CampaignIndex = () => {
     </Layout>
   );
 };
+
+export async function getServerSideProps() {
+  const campaigns = await factory.methods.getDeployedCampaigns().call();
+  return { props: { campaigns } };
+}
 
 export default CampaignIndex;

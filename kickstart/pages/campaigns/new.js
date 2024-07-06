@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import { useRouter } from "next/router";
-import { Form, FormField, Button, Input, Message } from "semantic-ui-react";
-import Layout from "../../components/Layout";
-import factory from "../../ethereum/factory";
-import web3 from "../../ethereum/web3";
+import React, { useState } from 'react';
+import { useRouter } from 'next/router';
+import { Form, FormField, Button, Input, Message } from 'semantic-ui-react';
+import Layout from '../../components/Layout';
+import factory from '../../ethereum/factory';
+import web3 from '../../ethereum/web3';
 
 const CampaignNew = () => {
-  const [minimumContribution, setMinimumContribution] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [minimumContribution, setMinimumContribution] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const [disabled, setDisabled] = useState(false);
 
@@ -16,7 +16,7 @@ const CampaignNew = () => {
   const onSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
-    setErrorMessage("");
+    setErrorMessage('');
     setDisabled(true);
 
     try {
@@ -25,7 +25,7 @@ const CampaignNew = () => {
         .createCampaign(minimumContribution)
         .send({ from: accounts[0] });
 
-      router.push("/");
+      router.push('/');
     } catch (err) {
       setErrorMessage(err.message);
     }
@@ -41,13 +41,13 @@ const CampaignNew = () => {
         <FormField>
           <label>Minimum Contribution</label>
           <Input
-            label="wei"
-            labelPosition="right"
+            label='wei'
+            labelPosition='right'
             value={minimumContribution}
             onChange={(event) => setMinimumContribution(event.target.value)}
           />
         </FormField>
-        <Message error header="Oops!" content={errorMessage} />
+        <Message error header='Oops!' content={errorMessage} />
         <Button primary loading={loading} disabled={disabled}>
           Create!
         </Button>

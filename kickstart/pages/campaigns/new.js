@@ -13,7 +13,7 @@ const CampaignNew = () => {
 
   const router = useRouter();
 
-  const onSubmit = async (event) => {
+  const onSubmit = async event => {
     event.preventDefault();
     setLoading(true);
     setErrorMessage('');

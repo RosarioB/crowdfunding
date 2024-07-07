@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { MenuMenu, MenuItem, Menu } from 'semantic-ui-react';
+import { MenuMenu, Menu } from 'semantic-ui-react';
 
 export default () => {
   return (

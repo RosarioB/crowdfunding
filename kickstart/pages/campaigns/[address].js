@@ -1,7 +1,8 @@
-import { CardGroup } from "semantic-ui-react";
+import { CardGroup, Grid, GridColumn } from "semantic-ui-react";
 import Layout from "../../components/Layout";
 import Campaign from "../../ethereum/campaign";
 import web3 from "../../ethereum/web3";
+import ContributeForm from "../../components/ContributeForm";
 
 const CampaignShow = ({ campaign }) => {
   const renderCards = () => {
@@ -45,7 +46,12 @@ const CampaignShow = ({ campaign }) => {
   return (
     <Layout>
       <h3>Campaign Show</h3>
-      {renderCards()}
+      <Grid>
+        <GridColumn width={10}>{renderCards()}</GridColumn>
+        <GridColumn width={6}>
+          <ContributeForm address={campaign.address} />
+        </GridColumn>
+      </Grid>
     </Layout>
   );
 };
@@ -60,6 +66,7 @@ export async function getServerSideProps(context) {
     requestsCount: summary[2].toString(),
     approversCount: summary[3].toString(),
     manager: summary[4],
+    address: address
   };
 
   return { props: { campaign: serializableSummary } };

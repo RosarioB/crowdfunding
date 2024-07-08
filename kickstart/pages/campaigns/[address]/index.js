@@ -1,8 +1,15 @@
-import { CardGroup, Grid, GridColumn } from "semantic-ui-react";
-import Layout from "../../components/Layout";
-import Campaign from "../../ethereum/campaign";
-import web3 from "../../ethereum/web3";
-import ContributeForm from "../../components/ContributeForm";
+import {
+  CardGroup,
+  Grid,
+  GridColumn,
+  GridRow,
+  Button,
+} from "semantic-ui-react";
+import Layout from "../../../components/Layout";
+import Campaign from "../../../ethereum/campaign";
+import web3 from "../../../ethereum/web3";
+import Link from "next/link";
+import ContributeForm from "../../../components/ContributeForm";
 
 const CampaignShow = ({ campaign }) => {
   const renderCards = () => {
@@ -47,10 +54,20 @@ const CampaignShow = ({ campaign }) => {
     <Layout>
       <h3>Campaign Show</h3>
       <Grid>
-        <GridColumn width={10}>{renderCards()}</GridColumn>
-        <GridColumn width={6}>
-          <ContributeForm address={campaign.address} />
-        </GridColumn>
+        <GridRow>
+          <GridColumn width={10}>{renderCards()}</GridColumn>
+          <GridColumn width={6}>
+            <ContributeForm address={campaign.address} />
+          </GridColumn>
+        </GridRow>
+
+        <GridRow>
+          <GridColumn>
+            <Link href={`/campaigns/${campaign.address}/requests`}>
+              <Button primary>View Requests</Button>
+            </Link>
+          </GridColumn>
+        </GridRow>
       </Grid>
     </Layout>
   );
@@ -66,7 +83,7 @@ export async function getServerSideProps(context) {
     requestsCount: summary[2].toString(),
     approversCount: summary[3].toString(),
     manager: summary[4],
-    address: address
+    address: address,
   };
 
   return { props: { campaign: serializableSummary } };

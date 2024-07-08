@@ -90,7 +90,7 @@ contract Campaign { // we define the type Campaign but we have not instatiated a
         );
     }
 
-    function getRequestCount() public view returns (uint) {
+    function getRequestsCount() public view returns (uint) {
         return requests.length;
     }
 }

@@ -1,39 +1,38 @@
-const path = require('path');
-const solc = require('solc');
-const fs = require('fs-extra'); // improved version of the fs module
+const path = require("path");
+const solc = require("solc");
+const fs = require("fs-extra");
 
-const buildPath = path.resolve(__dirname, 'build'); // buildPath is a reference to the build directory, __dirname is the current directory (ethereum)
-fs.removeSync(buildPath); // removes the folder build and everything in it
+const buildPath = path.resolve(__dirname, "build");
+fs.removeSync(buildPath);
 
-const campaignPath = path.resolve(__dirname, 'contracts', 'Campaign.sol'); // path to the Campaign.sol file
-const source = fs.readFileSync(campaignPath, 'utf8'); // reads the file Campaign.sol
+const campaignPath = path.resolve(__dirname, "contracts", "Campaign.sol");
+const source = fs.readFileSync(campaignPath, "utf8");
 
 const input = {
-  language: 'Solidity',
+  language: "Solidity",
   sources: {
-    'Campaign.sol': {
+    "Campaign.sol": {
       content: source,
     },
   },
   settings: {
     outputSelection: {
-      '*': {
-        '*': ['*'],
+      "*": {
+        "*": ["*"],
       },
     },
   },
 };
 
 const output = JSON.parse(solc.compile(JSON.stringify(input))).contracts[
-  'Campaign.sol'
-]; // output contains two objects: the output from compiling both the Campaign and the CampaignFactory contracts
+  "Campaign.sol"
+];
 
-fs.ensureDirSync(buildPath); // we are creating the build folder
+fs.ensureDirSync(buildPath);
 
-for (let contractName in output) {
+for (let contract in output) {
   fs.outputJsonSync(
-    // outputJsonSync creates a json file
-    path.resolve(buildPath, contractName + '.json'), // path of the JSON
-    output[contractName] // content of the JSON
+    path.resolve(buildPath, contract.replace(":", "") + ".json"),
+    output[contract]
   );
 }

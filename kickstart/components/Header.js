@@ -1,21 +1,24 @@
-import React from 'react';
-import Link from 'next/link';
-import { MenuMenu, Menu } from 'semantic-ui-react';
+import React from "react";
+import { Menu } from "semantic-ui-react";
+import { Link } from "../routes";
 
-export default () => {
+const Header = () => {
   return (
-    <Menu style={{ marginTop: '10px' }}>
-      <Link href='/' className='item'>
-        CrowdCoin
+    <Menu style={{ marginTop: "10px" }}>
+      <Link route="/">
+        <a className="item">CrowdCoin</a>
       </Link>
-      <MenuMenu position='right'>
-        <Link href='/' className='item'>
-          Campaigns
+      <Menu.Menu position="right">
+        <Link route="/">
+          <a className="item">Campaigns</a>
         </Link>
-        <Link href='/campaigns/new' className='item'>
-          +
+
+        <Link route="/campaigns/new">
+          <a className="item">+</a>
         </Link>
-      </MenuMenu>
+      </Menu.Menu>
     </Menu>
   );
 };
+
+export default Header;

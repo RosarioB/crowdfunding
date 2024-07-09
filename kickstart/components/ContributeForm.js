@@ -1,59 +1,55 @@
-import React, { useState } from 'react';
-import { useRouter } from 'next/router';
-import { Form, FormField, Input, Message, Button } from 'semantic-ui-react';
-import Campaign from '../ethereum/campaign';
-import web3 from '../ethereum/web3';
+import React, { Component } from "react";
+import { Form, Input, Message, Button } from "semantic-ui-react";
+import Campaign from "../ethereum/campaign";
+import web3 from "../ethereum/web3";
+import { Router } from "../routes";
 
-const ContributeForm = ({ address }) => {
-    const [value, setValue] = useState('');
-    const [errorMessage, setErrorMessage] = useState('');
-    const [loading, setLoading] = useState(false);
-    const [disabled, setDisabled] = useState(false);
+class ContributeForm extends Component {
+  state = {
+    value: "",
+    errorMessage: "",
+    loading: false,
+  };
 
-    const router = useRouter();
+  onSubmit = async (event) => {
+    event.preventDefault();
 
-    const onSubmit = async event => {
-        event.preventDefault();
+    const campaign = Campaign(this.props.address);
 
-        setLoading(true);
-        setErrorMessage('');
-        setDisabled(true);
+    this.setState({ loading: true, errorMessage: "" });
 
-        const campaign = Campaign(address);
+    try {
+      const accounts = await web3.eth.getAccounts();
+      await campaign.methods.contribute().send({
+        from: accounts[0],
+        value: web3.utils.toWei(this.state.value, "ether"),
+      });
+      Router.replaceRoute(`/campaigns/${this.props.address}`);
+    } catch (err) {
+      this.setState({ errorMessage: err.message });
+    }
+    this.setState({ loading: false, value: "" });
+  };
 
-        try {
-            const accounts = await web3.eth.getAccounts();
-            await campaign.methods.contribute().send({
-                from: accounts[0],
-                value: web3.utils.toWei(value, 'ether') 
-            });
-            router.reload();
-        } catch (err) {
-            setErrorMessage(err.message);
-        }
-
-        setLoading(false);
-        setDisabled(false);
-        setValue('');
-    };
-
+  render() {
     return (
-        <Form onSubmit={onSubmit} error={!!errorMessage}>
-            <FormField>
-                <label>Amount to contribute</label>
-                <Input 
-                    label='ether'
-                    labelPosition='right'
-                    value={value}
-                    onChange={(event) => setValue(event.target.value)}
-                />
-            </FormField>
-            <Message error header='Oops!' content={errorMessage} />
-            <Button primary loading={loading} disabled={disabled}>
-                Contribute!
-            </Button>
-        </Form>
+      <Form onSubmit={this.onSubmit} error={!!this.state.errorMessage}>
+        <Form.Field>
+          <label>Amount to Contribute</label>
+          <Input
+            value={this.state.value}
+            onChange={(event) => this.setState({ value: event.target.value })}
+            label="ether"
+            labelPosition="right"
+          />
+        </Form.Field>
+        <Message error header="Oops!" content={this.state.errorMessage} />
+        <Button primary loading={this.state.loading}>
+          Contribute!
+        </Button>
+      </Form>
     );
+  }
 }
 
 export default ContributeForm;

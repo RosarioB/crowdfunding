@@ -38,3 +38,6 @@ The platform allows a manager to initiate a new crowdfunding campaign to which a
 
 -  Run the tests on the smart contracts: `npm run test`
 
+## Acknowledgments
+This code is adapted from the course [Ethereum and Solidity: The Complete Developer's Guide](https://www.udemy.com/course/ethereum-and-solidity-the-complete-developers-guide/?couponCode=24T6MT62024) by Stephen Grider, with some modifications.
+

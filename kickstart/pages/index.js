@@ -1,8 +1,8 @@
-import React from 'react';
-import { CardGroup, Button } from 'semantic-ui-react';
-import factory from '../ethereum/factory';
-import Layout from '../components/Layout';
-import Link from 'next/link';
+import React from "react";
+import { CardGroup, Button } from "semantic-ui-react";
+import factory from "../ethereum/factory";
+import Layout from "../components/Layout";
+import Link from "next/link";
 
 const CampaignIndex = ({ campaigns }) => {
   const renderCampaigns = () => {
@@ -12,7 +12,7 @@ const CampaignIndex = ({ campaigns }) => {
         description: (
           <Link
             href={{
-              pathname: '/campaigns/[address]',
+              pathname: "/campaigns/[address]",
               query: { address },
             }}
           >
@@ -22,7 +22,6 @@ const CampaignIndex = ({ campaigns }) => {
         fluid: true,
       };
     });
-
     return <CardGroup items={items} />;
   };
 
@@ -30,11 +29,11 @@ const CampaignIndex = ({ campaigns }) => {
     <Layout>
       <div>
         <h3>Open Campaigns</h3>
-        <Link href='/campaigns/new'>
+        <Link href="/campaigns/new">
           <Button
-            floated='right'
-            content='Create Campaign'
-            icon='add'
+            floated="right"
+            content="Create Campaign"
+            icon="add"
             primary
           />
         </Link>

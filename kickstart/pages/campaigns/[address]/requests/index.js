@@ -25,7 +25,7 @@ export async function getServerSideProps(context) {
       return campaign.methods.requests(index).call();
     })
   );
-  return { props: { address: address, requests: requests } };
+  return { props: { address: address, requests: requests, requestsCount: requestsCount } };
 }
 
 export default RequestIndex;

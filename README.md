@@ -1,4 +1,5 @@
 # crowdfunding
+
 This application is a crowdfunding platform akin to [Kickstarter](https://www.kickstarter.com/?lang=en), featuring a frontend developed with React.js and Next.js, and a backend consisting of Solidity smart contracts deployed on the Ethereum blockchain. 
 
 The platform allows a manager to initiate a new crowdfunding campaign to which anyone can contribute. Within a campaign, the manager may propose requests for funds, which the campaign’s contributors can then approve. Once a spending request receives approval from the majority of contributors, it can be finalized, enabling the funds to be disbursed to the designated recipient.
@@ -17,6 +18,7 @@ The platform allows a manager to initiate a new crowdfunding campaign to which a
 - The folders `components` and `pages` contain the front-end code.
 
 ## Project set up
+
 1. `cd kickstart`
 
 2. Download the dependencies: `npm install`
@@ -39,5 +41,6 @@ The platform allows a manager to initiate a new crowdfunding campaign to which a
 -  Run the tests on the smart contracts: `npm run test`
 
 ## Acknowledgments
-This code is adapted from the course [Ethereum and Solidity: The Complete Developer's Guide](https://www.udemy.com/course/ethereum-and-solidity-the-complete-developers-guide/?couponCode=24T6MT62024) by Stephen Grider, with some modifications.
+
+This code is adapted from the course [Ethereum and Solidity: The Complete Developer's Guide](https://www.udemy.com/course/ethereum-and-solidity-the-complete-developers-guide) by Stephen Grider, with some modifications.
 
